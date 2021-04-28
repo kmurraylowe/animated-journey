@@ -4,16 +4,15 @@ module.exports = {
 	getPosts: async (req, res) => {
 		console.log(req.user);
 		try {
-			const postItems = await Post.find({ userId: req.user.id });
-			const itemsLeft = await Post.countDocuments({ userId: req.user.id, completed: false });
-			res.render('posts.ejs', { posts: postItems, left: itemsLeft, user: req.user });
+			const postItems = await Post.find({}).populate('user', 'userName');
+			res.render('posts.ejs', { posts: postItems, user: req.user });
 		} catch (err) {
 			console.log(err);
 		}
 	},
 	createPost: async (req, res) => {
 		try {
-			await Post.create({ post: req.body.postItem, completed: false, userId: req.user.id });
+			await Post.create({ title: req.body.title, caption: req.body.caption, user: req.user.id });
 			console.log('post has been added!');
 			res.redirect('/posts');
 		} catch (err) {
@@ -22,6 +21,7 @@ module.exports = {
 	},
 	markComplete: async (req, res) => {
 		try {
+			('');
 			await Post.findOneAndUpdate(
 				{ _id: req.body.postIdFromJSFile },
 				{

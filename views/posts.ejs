@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <h1>Posts</h1>
-    <ul>
-    <% posts.forEach( el => { %>
-            <li class='postItem' data-id='<%=el._id%>'>
-                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.post %></span>
-                <span class='del'> Delete </span>
-            </li>
-    <% }) %>    
-    </ul>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<h1>Posts</h1>
+		<ul>
+			<% posts.forEach( el => { %>
+			<li class="postItem" data-id="<%=el._id%>">
+				<p><%= el.title %></p>
+				<p><%= el.caption %></p>
+				<p><%= el.user.userName %></p>
+				<button>Delete</button>
+			</li>
+			<% }) %>
+		</ul>
 
-    <h2><%= user.userName %> has <%= left %> things left to do.</h2>
+		<form action="/posts/createPost" method="POST">
+			<div>
+				<label for="title">Title</label>
+				<input type="text" placeholder="Project Title" name="title" id="title" />
+			</div>
+			<div>
+				<label for="caption">Caption</label>
+				<textarea name="caption" id="caption"></textarea>
+			</div>
+			<input type="submit" />
+		</form>
 
-    <form action="/posts/createPost" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='postItem'>
-        <input type="submit">
-    </form>
+		<a href="/logout">Logout</a>
 
-    <a href="/logout">Logout</a>
-
-    <script src="js/main.js"></script>
-</body>
+		<script src="js/main.js"></script>
+	</body>
 </html>
