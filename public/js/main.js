@@ -1,18 +1,14 @@
 const deleteBtn = document.querySelectorAll('.del');
-const todoItem = document.querySelectorAll('span.not');
-const todoComplete = document.querySelectorAll('span.completed');
+const like = document.querySelectorAll('.like')
 
 Array.from(deleteBtn).forEach(el => {
 	el.addEventListener('click', deleteTodo);
 });
 
-Array.from(todoItem).forEach(el => {
-	el.addEventListener('click', markComplete);
-});
+Array.from(like).forEach(el =>{
+	el.addEventListener('click', likePost)
+})
 
-Array.from(todoComplete).forEach(el => {
-	el.addEventListener('click', markIncomplete);
-});
 
 async function deleteTodo() {
 	const postId = this.parentNode.dataset.id;
@@ -21,7 +17,7 @@ async function deleteTodo() {
 			method: 'delete',
 			headers: { 'Content-type': 'application/json' },
 			body: JSON.stringify({
-				postIdFromJSFile: postId,
+				'postIdFromJSFile': postId,
 			}),
 		});
 		const data = await response.json();
@@ -32,38 +28,28 @@ async function deleteTodo() {
 	}
 }
 
-async function markComplete() {
-	const todoId = this.parentNode.dataset.id;
-	try {
-		const response = await fetch('post/markComplete', {
+async function likePost(){
+	const postId = this.parentNode.dataset.id
+	const currentLikes = Number(this.parentNode.childNodes[1].innerText)
+	
+	
+	try{
+		const res = await fetch('posts/like', {
 			method: 'put',
-			headers: { 'Content-type': 'application/json' },
-			body: JSON.stringify({
-				postIdFromJSFile: postId,
-			}),
-		});
-		const data = await response.json();
-		console.log(data);
-		location.reload();
-	} catch (err) {
-		console.log(err);
-	}
-}
+			headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'postIdFromJSFile': postId,
+				'likes': currentLikes
 
-async function markIncomplete() {
-	const todoId = this.parentNode.dataset.id;
-	try {
-		const response = await fetch('posts/markIncomplete', {
-			method: 'put',
-			headers: { 'Content-type': 'application/json' },
-			body: JSON.stringify({
-				postIdFromJSFile: postId,
-			}),
-		});
-		const data = await response.json();
-		console.log(data);
-		location.reload();
-	} catch (err) {
-		console.log(err);
+                
+            })
+		})
+		location.reload()
+		const data = await res.json()
+		console.log(data)
+		
+	}
+	catch(err){
+		console.log(err)
 	}
 }

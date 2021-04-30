@@ -12,10 +12,13 @@
 		<ul>
 			<% posts.forEach( el => { %>
 			<li class="postItem" data-id="<%=el._id%>">
+				<p class="likes"><%= el.likes%></p>
 				<p><%= el.title %></p>
 				<p><%= el.caption %></p>
 				<p><%= el.user.userName %></p>
-				<button>Delete</button>
+				
+				<button class="like">like</button>
+				<button class="del">Delete</button>
 			</li>
 			<% }) %>
 		</ul>
