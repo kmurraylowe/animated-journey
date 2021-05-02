@@ -19,33 +19,17 @@ module.exports = {
 			console.log(err);
 		}
 	},
-	markComplete: async (req, res) => {
-		try {
-			('');
-			await Post.findOneAndUpdate(
-				{ _id: req.body.postIdFromJSFile },
-				{
-					completed: true,
-				}
-			);
-			console.log('Marked Complete');
-			res.json('Marked Complete');
-		} catch (err) {
-			console.log(err);
+	likePost: async (req,res)=> {
+		try{
+			await Post.findOneAndUpdate({_id: req.body.postIdFromJSFile },{
+				likes: req.body.likes +1
+				
+			})
+			console.log('liked')
+			res.json("Added like")
 		}
-	},
-	markIncomplete: async (req, res) => {
-		try {
-			await Post.findOneAndUpdate(
-				{ _id: req.body.postIdFromJSFile },
-				{
-					completed: false,
-				}
-			);
-			console.log('Marked Incomplete');
-			res.json('Marked Incomplete');
-		} catch (err) {
-			console.log(err);
+		catch(err){
+			console.log(err)
 		}
 	},
 	deletePost: async (req, res) => {

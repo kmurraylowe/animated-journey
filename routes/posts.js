@@ -7,9 +7,7 @@ router.get('/', ensureAuth, postsController.getPosts)
 
 router.post('/createPost', postsController.createPost)
 
-router.put('/markComplete', postsController.markComplete)
-
-router.put('/markIncomplete', postsController.markIncomplete)
+router.put('/like', postsController.likePost)
 
 router.delete('/deletePost', postsController.deletePost)
 
