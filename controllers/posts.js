@@ -1,4 +1,5 @@
 const Post = require('../models/Posts');
+const fs = require('fs');
 
 module.exports = {
 	getPosts: async (req, res) => {
@@ -12,7 +13,12 @@ module.exports = {
 	},
 	createPost: async (req, res) => {
 		try {
-			await Post.create({ title: req.body.title, caption: req.body.caption, user: req.user.id });
+			console.log(req.body);
+			await Post.create({
+				title: req.body.title,
+				caption: req.body.caption,
+				user: req.user.id,
+			});
 			console.log('post has been added!');
 			res.redirect('/posts');
 		} catch (err) {
