@@ -23,11 +23,13 @@
 					<%= el.user.userName %>
 				</p>
 
-				<button class="like">like</button>
-				<button class="del">Delete</button>
-			</li>
-			<% }) %>
-	</ul>
+		<button class="like">like</button>
+		<% if(user.id === el.user.id) { %>
+			<button class='del'>Delete</button>
+		<% } %>
+	</li>
+	<% }) %>
+</ul>
 
 	<div class='modal' id='addPostModal' tabindex="-1">
 		<div class='modal-dialog modal-dialog-centered'>
