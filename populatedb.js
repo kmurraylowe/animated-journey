@@ -20,13 +20,24 @@ const main = async () => {
 			.collection('users')
 			.insertOne({ userName: 'Morgan', email: 'morgan@email.com', password: hash });
 
+		const result2 = await db.collection('users').insertOne({ username: 'Test', email: 'test@email.com', password: hash });
+
 		const user = result.ops[0];
+		const user2 = result2.ops[0];
 
 		for (let i = 0; i < 5; i++) {
 			const res = await db.collection('posts').insertOne({
 				title: `Test Post ${i}`,
 				caption: `This is the caption for test post ${i}`,
 				user: user._id,
+			});
+			console.log(res.ops[0]);
+		}
+		for (let i = 0; i < 5; i++) {
+			const res = await db.collection('posts').insertOne({
+				title: `Test Post ${i}`,
+				caption: `This is the caption for test post ${i}`,
+				user: user2._id,
 			});
 			console.log(res.ops[0]);
 		}

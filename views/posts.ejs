@@ -16,7 +16,9 @@
 		<p><%= el.user.userName %></p>
 
 		<button class="like">like</button>
-		<button class="del">Delete</button>
+		<% if(user.id === el.user.id) { %>
+			<button class='del'>Delete</button>
+		<% } %>
 	</li>
 	<% }) %>
 </ul>
