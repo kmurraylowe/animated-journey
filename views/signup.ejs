@@ -1,5 +1,5 @@
-<%- include('partials/header') %> <% if (locals.messages.errors) { %> <% messages.errors.forEach( el
-=> { %>
+<%- include('partials/header', { user: null }) %> 
+<% if (locals.messages.errors) { %> <% messages.errors.forEach( el => { %>
 <div class="alert alert-danger"><%= el.msg %></div>
 <% }) %> <% } %>
 <form action="/signup" method="POST">

@@ -3,7 +3,6 @@ const fs = require('fs');
 
 module.exports = {
 	getPosts: async (req, res) => {
-		console.log(req.user);
 		try {
 			const postItems = await Post.find({}).populate('user', 'userName');
 			res.render('posts.ejs', { posts: postItems, user: req.user });

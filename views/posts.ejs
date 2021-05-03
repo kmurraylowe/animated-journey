@@ -1,6 +1,12 @@
 <%- include('partials/header') %>
 
 <h1>Posts</h1>
+<div>
+	<button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addPostModal'>
+		Add Post+
+	</button>
+</div>
+
 <ul>
 	<% posts.forEach( el => { %>
 	<li class="postItem" data-id="<%=el._id%>">
@@ -15,19 +21,30 @@
 	<% }) %>
 </ul>
 
-<form action="/posts/createPost" method="POST">
-	<div>
-		<label for="title">Title</label>
-		<input type="text" placeholder="Project Title" name="title" id="title" />
+<div class='modal' id='addPostModal' tabindex="-1">
+	<div class='modal-dialog modal-dialog-centered'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<h5 class='modal-title'>Enter Post Information</h5>
+				<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+			</div>
+			<div class='modal-body'>
+				<form class='form' action='/posts/createPost' method="POST">
+					<div class='form-group'>
+						<label for='title'>Title</label>
+						<input type='text' placeholder='Project title' name='title' id='title' />
+					</div>
+					<div class='form-group'>
+						<label for='caption'>Caption</label>
+						<textarea id='caption' name='caption' rows='5' cols='30'></textarea>
+					</div>
+					<input type='submit' value='Submit'>
+				</form>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="caption">Caption</label>
-		<textarea name="caption" id="caption"></textarea>
-	</div>
-	<input type="submit" value="Submit" />
-</form>
+</div>
 
-<a href="/logout">Logout</a>
-<a href="/profile/<%=user.id%>">Go to profile</a>
+
 
 <%- include('partials/footer') %>

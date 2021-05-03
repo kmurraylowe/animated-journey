@@ -40,8 +40,6 @@ async function likePost(){
             body: JSON.stringify({
                 'postIdFromJSFile': postId,
 				'likes': currentLikes
-
-                
             })
 		})
 		location.reload()
