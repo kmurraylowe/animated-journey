@@ -21,7 +21,7 @@
 	</head>
 	<body>
 		<nav class='navbar navbar-dark bg-dark'>
-			<div class='container-fluid'>
+			<div class='container'>
 				<a class='navbar-brand' href='/posts'>Animated Journey</a>
 				<ul class='nav nav-pills justify-content-end'>
 					<% if(user) { %>
@@ -35,10 +35,10 @@
 							<a class='nav-link' href='/logout'>Logout</a>
 						</li>
 					<% }else{ %>
-						<li>
+						<li class='nav-item'>
 							<a class='nav-link' href='/login'>Login</a>						
 						</li>
-						<li>
+						<li class='nav-item'>
 							<a class='nav-link' href='/signup'>Signup</a>
 						</li>
 					<% } %>
