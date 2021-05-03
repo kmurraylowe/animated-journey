@@ -4,8 +4,8 @@ const fs = require('fs');
 module.exports = {
 	getPosts: async (req, res) => {
 		try {
-			const postItems = await Post.find({}).populate('user', 'userName');
-			res.render('posts.ejs', { posts: postItems, user: req.user });
+			const posts = await Post.find({}).populate('user', 'userName');
+			res.render('posts.ejs', { posts: posts, user: req.user });
 		} catch (err) {
 			console.log(err);
 		}
@@ -24,27 +24,29 @@ module.exports = {
 			console.log(err);
 		}
 	},
-	likePost: async (req,res)=> {
-		try{
-			await Post.findOneAndUpdate({_id: req.body.postIdFromJSFile },{
-				likes: req.body.likes +1
-				
+	likePost: async (req, res) => {
+		try {
+			await Post.findOneAndUpdate({ _id: req.body.postIdFromJSFile }, {
+				likes: req.body.likes + 1
+
 			})
 			console.log('liked')
 			res.json("Added like")
 		}
-		catch(err){
+		catch (err) {
 			console.log(err)
 		}
 	},
 	deletePost: async (req, res) => {
-		console.log(req.body.postIdFromJSFile);
+		console.log('We have hit the route');
 		try {
-			await Post.findOneAndDelete({ _id: req.body.postIdFromJSFile });
-			console.log('Deleted Todo');
-			res.json('Deleted It');
+
+			// Delete post from db
+			await Post.deleteOne({ _id: req.body.postIdFromJSFile });
+			console.log("Deleted Post");
+			res.json("Succesful Delete");
 		} catch (err) {
-			console.log(err);
+			res.redirect("/posts");
 		}
 	},
 };
