@@ -1,17 +1,9 @@
 const deleteBtn = document.querySelectorAll('.del');
 const like = document.querySelectorAll('.like')
 
-Array.from(deleteBtn).forEach(el => {
-	el.addEventListener('click', deleteTodo);
-});
-
-Array.from(like).forEach(el =>{
-	el.addEventListener('click', likePost)
-})
-
 
 async function deleteTodo() {
-	const postId = this.parentNode.dataset.id;
+	const postId = this.parentNode.parentNode.parentNode.dataset.id;
 	try {
 		const response = await fetch('posts/deletePost', {
 			method: 'delete',
@@ -29,9 +21,7 @@ async function deleteTodo() {
 }
 
 async function likePost(){
-	const postId = this.parentNode.dataset.id
-	const currentLikes = Number(this.parentNode.childNodes[1].innerText)
-	
+	const postId = this.parentNode.parentNode.parentNode.dataset.id;
 	
 	try{
 		const res = await fetch('posts/like', {
@@ -39,7 +29,6 @@ async function likePost(){
 			headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 'postIdFromJSFile': postId,
-				'likes': currentLikes
             })
 		})
 		location.reload()
@@ -51,3 +40,13 @@ async function likePost(){
 		console.log(err)
 	}
 }
+Array.from(deleteBtn).forEach(el => {
+	el.addEventListener('click', deleteTodo);
+});
+
+Array.from(like).forEach(el =>{
+	el.addEventListener('click', likePost)
+})
+
+
+

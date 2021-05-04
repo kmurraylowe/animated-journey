@@ -30,12 +30,17 @@ module.exports = {
 	},
 	likePost: async (req, res) => {
 		try {
-			await Post.findOneAndUpdate({ _id: req.body.postIdFromJSFile }, {
-				likes: req.body.likes + 1
+			const post = await Post.findById(req.body.postIdFromJSFile);
 
-			})
-			console.log('liked')
-			res.json("Added like")
+			if(post){
+				await post.updateOne({$set: {
+					likes: post.likes + 1,
+				}});
+
+				return res.json({ message: 'Successfully added like' });
+			}
+
+			return res.json({ message: 'Could not find post' });
 		}
 		catch (err) {
 			console.log(err)
