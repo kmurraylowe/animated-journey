@@ -1,0 +1,15 @@
+.centerAll{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.titlePost{
+    margin-right: 5%;
+}
+.flex-item{
+    width: 25%;
+}
+
+.likes{
+    padding-top: 10%;
+}
