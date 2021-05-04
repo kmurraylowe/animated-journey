@@ -5,7 +5,7 @@ Array.from(deleteBtn).forEach(el => {
 	el.addEventListener('click', deleteTodo);
 });
 
-Array.from(like).forEach(el =>{
+Array.from(like).forEach(el => {
 	el.addEventListener('click', likePost)
 })
 
@@ -17,7 +17,7 @@ async function deleteTodo() {
 			method: 'delete',
 			headers: { 'Content-type': 'application/json' },
 			body: JSON.stringify({
-				'postIdFromJSFile': postId,
+				postIdFromJSFile: postId,
 			}),
 		});
 		const data = await response.json();
@@ -28,26 +28,26 @@ async function deleteTodo() {
 	}
 }
 
-async function likePost(){
+async function likePost() {
 	const postId = this.parentNode.dataset.id
 	const currentLikes = Number(this.parentNode.childNodes[1].innerText)
-	
-	
-	try{
+
+
+	try {
 		const res = await fetch('posts/like', {
 			method: 'put',
-			headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                'postIdFromJSFile': postId,
-				'likes': currentLikes
-            })
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				postIdFromJSFile: postId,
+				likes: currentLikes
+			})
 		})
 		location.reload()
 		const data = await res.json()
 		console.log(data)
-		
+
 	}
-	catch(err){
+	catch (err) {
 		console.log(err)
 	}
 }

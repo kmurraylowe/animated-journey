@@ -14,11 +14,11 @@ module.exports = {
 	createPost: async (req, res) => {
 		try {
 			const result = await cloudinary.uploader.upload(req.file.path);
-			
+
 			await Post.create({
 				title: req.body.title,
 				image: result.secure_url,
-       		    cloudinaryId: result.public_id,
+				cloudinaryId: result.public_id,
 				caption: req.body.caption,
 				user: req.user.id,
 			});
@@ -47,7 +47,7 @@ module.exports = {
 			let post = await Post.findById({ _id: req.body.postIdFromJSFile })
 			// Delete post from db
 			await cloudinary.uploader.destroy(post.cloudinaryId);
-			await Post.remove({_id: req.body.postIdFromJSFile})
+			await Post.remove({ _id: req.body.postIdFromJSFile })
 			console.log("Deleted Post");
 			res.json("Succesful Delete");
 		} catch (err) {
