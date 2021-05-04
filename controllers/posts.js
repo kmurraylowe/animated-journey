@@ -47,14 +47,13 @@ module.exports = {
 		}
 	},
 	deletePost: async (req, res) => {
-		console.log('We have hit the route');
 		try {
 			let post = await Post.findById({ _id: req.body.postIdFromJSFile })
 			// Delete post from db
 			await cloudinary.uploader.destroy(post.cloudinaryId);
-			await Post.remove({_id: req.body.postIdFromJSFile})
+			await post.remove()
 			console.log("Deleted Post");
-			res.json("Succesful Delete");
+			res.json({ message: 'Successfully deleted post' });
 		} catch (err) {
 			res.redirect("/posts");
 		}

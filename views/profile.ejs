@@ -1,20 +1,22 @@
-<%- include('partials/header') %>
-
+<%- include('partials/profileHeader') %>
+	<div class='centerAll'>
 	<% for(let i=0; i < posts.length; i++) { %>
-		<div class='centerAll'>
-			<div class="card" style="width: 18rem;" id="spacing">
-				<img src="<%= posts[i].image %>" class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Title: <%= posts[i].title %>
-					</h5>
-					<h6 class="card-title">Username: <%= user.userName %>
-					</h6>
-					<p class='card-text'>
-						<%= posts[i].caption %>
-					</p>
-					<button class='btn btn-danger'><i class='fa fa-trash'></i></button>
-				</div>
+		<div class="card" style="width: 18rem;" id="spacing" data-id='<%= posts[i]._id %>'>
+			<img src="<%= posts[i].image %>" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Title: <%= posts[i].title %>
+				</h5>
+				<h6 class="card-title">Username: <%= user.userName %>
+				</h6>
+				<p class='card-text'>
+					<%= posts[i].caption %>
+				</p>
 			</div>
-			<% } %>
+			<div class='card-footer'>
+				<button class='btn btn-danger del'>Delete</button>
+				<button class='btn btn-warning edit'>Edit</button>
+			</div>
 		</div>
-		<%- include('partials/footer') %>
+	<% } %>
+	</div>
+<%- include('partials/footer') %>

@@ -4,6 +4,7 @@ const like = document.querySelectorAll('.like')
 
 async function deleteTodo() {
 	const postId = this.parentNode.parentNode.parentNode.dataset.id;
+	console.log(postId);
 	try {
 		const response = await fetch('posts/deletePost', {
 			method: 'delete',
@@ -40,6 +41,9 @@ async function likePost(){
 		console.log(err)
 	}
 }
+
+
+
 Array.from(deleteBtn).forEach(el => {
 	el.addEventListener('click', deleteTodo);
 });
