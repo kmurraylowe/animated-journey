@@ -1,4 +1,5 @@
 const Post = require('../models/Posts');
+const cloudinary = require("../middleware/cloudinary")
 const fs = require('fs');
 
 module.exports = {
@@ -12,9 +13,12 @@ module.exports = {
 	},
 	createPost: async (req, res) => {
 		try {
-			console.log(req.body);
+			const result = await cloudinary.uploader.upload(req.file.path);
+			
 			await Post.create({
 				title: req.body.title,
+				image: result.secure_url,
+       		    cloudinaryId: result.public_id,
 				caption: req.body.caption,
 				user: req.user.id,
 			});
@@ -40,9 +44,10 @@ module.exports = {
 	deletePost: async (req, res) => {
 		console.log('We have hit the route');
 		try {
-
+			let post = await Post.findById({ _id: req.body.postIdFromJSFile })
 			// Delete post from db
-			await Post.deleteOne({ _id: req.body.postIdFromJSFile });
+			await cloudinary.uploader.destroy(post.cloudinaryId);
+			await Post.remove({_id: req.body.postIdFromJSFile})
 			console.log("Deleted Post");
 			res.json("Succesful Delete");
 		} catch (err) {
