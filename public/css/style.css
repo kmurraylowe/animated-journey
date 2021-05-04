@@ -1,10 +1,12 @@
 .centerAll{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 .titlePost{
     margin-right: 5%;
+    padding-bottom: 3%;
 }
 .flex-item{
     width: 25%;
@@ -12,4 +14,7 @@
 
 .likes{
     padding-top: 10%;
+}
+.dotRemover{
+    list-style: none;
 }

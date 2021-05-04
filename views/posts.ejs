@@ -9,26 +9,34 @@
 			</div>
 		</div>
 		<div class="flex-item">
-			<ul>
+			<ul class='dotRemover'>
 				<% posts.forEach( el=> { %>
 					<li class="postItem" data-id="<%=el._id%>">
-						<p class="likes">
-							Likes: <%= el.likes%>
-						</p>
-						<p>
-							Title: <%= el.title %>
-						</p>
-						<p>
-							Caption: <%= el.caption %>
-						</p>
-						<p>
-							Username: <%= el.user.userName %>
-						</p>
+						<div class="card" style="width: 18rem;">
+							<img src="<%= el.image %>" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Title: <%= el.title %>
+								</h5>
+								<h6 class="card-title">Username: <%= el.user.userName %>
+								</h6>
 
-						<button class="like">like</button>
-						<% if(user.id===el.user.id) { %>
-							<button class='del'>Delete</button>
-							<% } %>
+								<p class='card-text'>
+									Caption: <%= el.caption %>
+								</p>
+								<p class="card-text" class="likes">Likes: <%= el.likes%>
+								</p>
+							</div>
+							<div class='card-footer'>
+								<button class="like">like</button>
+								<% if(user.id===el.user.id) { %>
+									<button class='del'>Delete</button>
+									<% } %>
+							</div>
+						</div>
+						<p>
+
+
+
 					</li>
 					<% }) %>
 			</ul>
@@ -41,7 +49,7 @@
 							<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
 						</div>
 						<div class='modal-body'>
-							<form class='form' action='/posts/createPost' method="POST">
+							<form class='form' action='/posts/createPost' method="POST" enctype="multipart/form-data">
 								<div class='form-group'>
 									<label for='title'>Title</label>
 									<input type='text' placeholder='Project title' name='title' id='title' />
