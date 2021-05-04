@@ -11,7 +11,7 @@
 		<div class="flex-item">
 			<ul class='dotRemover'>
 				<% posts.forEach( el=> { %>
-					<li class="postItem" data-id="<%=el._id%>">
+					<li class="postItem" data-id="<%=el._id%>" id="spacing">
 						<div class="card" style="width: 18rem;">
 							<img src="<%= el.image %>" class="card-img-top" alt="...">
 							<div class="card-body">
@@ -27,13 +27,12 @@
 								</p>
 							</div>
 							<div class='card-footer'>
-								<button class="like">like</button>
-								<% if(user.id===el.user.id) { %>
-									<button class='del'>Delete</button>
+								<button type="button" class="btn btn-primary" class="like">like</button>
+								<% if(user.id==el.user.id) { %>
+									<button type="button" class="btn btn-danger" class='del'>Delete</button>
 									<% } %>
 							</div>
 						</div>
-						<p>
 
 
 
