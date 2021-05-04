@@ -1,14 +1,20 @@
 <%- include('partials/header') %>
 
-<p><%= user.userName %></p>
-
-<% for(let i = 0; i < posts.length; i++) { %>
-<div>
-	<p><%= posts[i].title %></p>
-	<p><%= posts[i].caption %></p>
-	<button class='btn btn-danger'><i class='fa fa-trash'></i></button>
-</div>
-<% } %>
-
-
-<%- include('partials/footer') %>
+	<% for(let i=0; i < posts.length; i++) { %>
+		<div class='centerAll'>
+			<div class="card" style="width: 18rem;" id="spacing">
+				<img src="<%= posts[i].image %>" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">Title: <%= posts[i].title %>
+					</h5>
+					<h6 class="card-title">Username: <%= user.userName %>
+					</h6>
+					<p class='card-text'>
+						<%= posts[i].caption %>
+					</p>
+					<button class='btn btn-danger'><i class='fa fa-trash'></i></button>
+				</div>
+			</div>
+			<% } %>
+		</div>
+		<%- include('partials/footer') %>

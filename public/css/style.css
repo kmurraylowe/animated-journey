@@ -5,16 +5,11 @@
     align-items: center;
 }
 .titlePost{
-    margin-right: 5%;
-    padding-bottom: 3%;
-}
-.flex-item{
-    width: 25%;
-}
-
-.likes{
-    padding-top: 10%;
+    padding-top: 2%;
 }
 .dotRemover{
     list-style: none;
+}
+#spacing{
+    margin-top: 7%;
 }
