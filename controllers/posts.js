@@ -46,6 +46,37 @@ module.exports = {
 			console.log(err)
 		}
 	},
+	updatePost: async (req, res) => {
+		const { postId } = req.params;
+		const { title, caption } = req.body;
+		const img = req.file;
+
+		try {
+			// Find the post
+			const post = await Post.findById(postId);
+			let cloudinaryResult;
+
+			// Check if a new image is provided
+			if(img){
+				// Delete previous image in cloudinary
+				await cloudinary.uploader.destroy(post.cloudinaryId);
+
+				// Upload new image to cloudinary
+				cloudinaryResult = await cloudinary.uploader.upload(img.path);
+			}
+
+			await post.updateOne({ $set: {
+				title,
+				caption,
+				image: cloudinaryResult ? cloudinaryResult.secure_url : post.image,
+				cloudinaryId: cloudinaryResult ? cloudinaryResult.public_id : post.cloudinaryId,
+			}});
+
+			res.redirect(`/profile/${req.user.id}`);
+		}catch(error){
+			console.log(error);
+		};
+	},
 	deletePost: async (req, res) => {
 		try {
 			let post = await Post.findById({ _id: req.body.postIdFromJSFile })
