@@ -5,7 +5,7 @@ const fs = require('fs');
 module.exports = {
 	getPosts: async (req, res) => {
 		try {
-			const posts = await Post.find({}).populate('user', 'userName');
+			const posts = await Post.find({}).sort({createdAt: "desc"}).populate('user', 'userName');
 			res.render('posts.ejs', { posts: posts, user: req.user });
 		} catch (err) {
 			console.log(err);
