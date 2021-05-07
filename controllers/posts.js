@@ -11,6 +11,21 @@ module.exports = {
 			console.log(err);
 		}
 	},
+	getSinglePost: async (req, res) => {
+		const { postId } = req.params;
+		try {
+			const post = await Post.findById(postId).populate('user', 'userName');
+
+			if(post){
+				res.render('post.ejs', { post, user: req.user });
+			}else{
+				console.log(`ERROR: Post with id ${postId} was not found.`);
+				res.redirect('/posts');
+			}
+		}catch(error){
+			console.log(error);
+		};
+	},
 	createPost: async (req, res) => {
 		try {
 			const result = await cloudinary.uploader.upload(req.file.path);
@@ -84,7 +99,7 @@ module.exports = {
 			await cloudinary.uploader.destroy(post.cloudinaryId);
 			await post.remove()
 			console.log("Deleted Post");
-			res.json({ message: 'Successfully deleted post' });
+			res.redirect('/posts');
 		} catch (err) {
 			res.redirect("/posts");
 		}

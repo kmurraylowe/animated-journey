@@ -13,7 +13,9 @@
 				<% posts.forEach( el=> { %>
 					<li class="postItem" data-id="<%=el._id%>" id="spacing">
 						<div class="card" style="width: 18rem;">
-							<img src="<%= el.image %>" class="card-img-top" alt="...">
+							<a href='/posts/<%= el._id %>'>
+								<img src="<%= el.image %>" class="card-img-top" alt="...">
+							</a>
 							<div class="card-body">
 								<h5 class="card-title">Title: <%= el.title %>
 								</h5>
