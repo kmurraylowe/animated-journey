@@ -11,6 +11,22 @@ module.exports = {
 			console.log(err);
 		}
 	},
+	getUserFeed: async (req, res) => {
+		try {
+			let posts;
+			if (req.user.id == req.params.userId) {
+				posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' });
+
+				res.render('profile.ejs', { user: req.user, posts });
+			} else {
+				posts = await Post.find({ user: req.params.userId }).populate('user', 'userName');
+				res.render('userFeed.ejs', { posts: posts, user: req.user });
+			}
+
+		} catch (err) {
+			console.log(err);
+		}
+	},
 	createPost: async (req, res) => {
 		try {
 			const result = await cloudinary.uploader.upload(req.file.path);
