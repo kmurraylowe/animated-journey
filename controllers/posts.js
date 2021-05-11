@@ -11,6 +11,22 @@ module.exports = {
 			console.log(err);
 		}
 	},
+	getUserFeed: async (req, res) => {
+		try {
+			let posts;
+			if (req.user.id == req.params.userId) {
+				posts = await Post.find({ user: req.user.id }).sort({ createdAt: 'desc' });
+
+				res.render('profile.ejs', { user: req.user, posts });
+			} else {
+				posts = await Post.find({ user: req.params.userId }).populate('user', 'userName');
+				res.render('userFeed.ejs', { posts: posts, user: req.user });
+			}
+
+		} catch (err) {
+			console.log(err);
+		}
+	},
 	getSinglePost: async (req, res) => {
 		const { postId } = req.params;
 		try {
@@ -29,11 +45,11 @@ module.exports = {
 	createPost: async (req, res) => {
 		try {
 			const result = await cloudinary.uploader.upload(req.file.path);
-			
+
 			await Post.create({
 				title: req.body.title,
 				image: result.secure_url,
-       		    cloudinaryId: result.public_id,
+				cloudinaryId: result.public_id,
 				caption: req.body.caption,
 				user: req.user.id,
 			});
@@ -47,10 +63,12 @@ module.exports = {
 		try {
 			const post = await Post.findById(req.body.postIdFromJSFile);
 
-			if(post){
-				await post.updateOne({$set: {
-					likes: post.likes + 1,
-				}});
+			if (post) {
+				await post.updateOne({
+					$set: {
+						likes: post.likes + 1,
+					}
+				});
 
 				return res.json({ message: 'Successfully added like' });
 			}
@@ -72,7 +90,7 @@ module.exports = {
 			let cloudinaryResult;
 
 			// Check if a new image is provided
-			if(img){
+			if (img) {
 				// Delete previous image in cloudinary
 				await cloudinary.uploader.destroy(post.cloudinaryId);
 
@@ -80,15 +98,17 @@ module.exports = {
 				cloudinaryResult = await cloudinary.uploader.upload(img.path);
 			}
 
-			await post.updateOne({ $set: {
-				title,
-				caption,
-				image: cloudinaryResult ? cloudinaryResult.secure_url : post.image,
-				cloudinaryId: cloudinaryResult ? cloudinaryResult.public_id : post.cloudinaryId,
-			}});
+			await post.updateOne({
+				$set: {
+					title,
+					caption,
+					image: cloudinaryResult ? cloudinaryResult.secure_url : post.image,
+					cloudinaryId: cloudinaryResult ? cloudinaryResult.public_id : post.cloudinaryId,
+				}
+			});
 
 			res.redirect(`/profile/${req.user.id}`);
-		}catch(error){
+		} catch (error) {
 			console.log(error);
 		};
 	},

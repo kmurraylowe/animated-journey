@@ -19,7 +19,9 @@
 							<div class="card-body">
 								<h5 class="card-title">Title: <%= el.title %>
 								</h5>
-								<h6 class="card-title">Username: <%= el.user.userName %>
+								<h6 class="card-title">Username: <a href="/posts/user/<%= el.user.id %>">
+										<%= el.user.userName %>
+									</a>
 								</h6>
 
 								<p class='card-text'>
@@ -30,8 +32,8 @@
 							</div>
 							<div class='card-footer'>
 								<button type="button" class="btn btn-primary like">like</button>
-								<% if(user.id==el.user.id) { %>
-									<button type="button" class="btn btn-danger del" >Delete</button>
+								<% if(el.user.id==user.id) { %>
+									<button type="button" class="btn btn-danger del">Delete</button>
 									<% } %>
 							</div>
 						</div>

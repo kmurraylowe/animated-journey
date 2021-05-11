@@ -6,6 +6,7 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth');
 
 router.get('/', ensureAuth, postsController.getPosts);
 
+router.get('/user/:userId', postsController.getUserFeed);
 router.get('/:postId', postsController.getSinglePost);
 
 router.post('/createPost', upload.single("file"), postsController.createPost);

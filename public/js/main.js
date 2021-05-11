@@ -1,6 +1,14 @@
 const deleteBtn = document.querySelectorAll('.del');
 const like = document.querySelectorAll('.like')
 
+Array.from(deleteBtn).forEach(el => {
+	el.addEventListener('click', deleteTodo);
+});
+
+Array.from(like).forEach(el => {
+	el.addEventListener('click', likePost)
+})
+
 
 async function deleteTodo() {
 	const postId = this.parentNode.parentNode.parentNode.dataset.id;
@@ -10,7 +18,7 @@ async function deleteTodo() {
 			method: 'delete',
 			headers: { 'Content-type': 'application/json' },
 			body: JSON.stringify({
-				'postIdFromJSFile': postId,
+				postIdFromJSFile: postId,
 			}),
 		});
 		const data = await response.json();
@@ -21,23 +29,23 @@ async function deleteTodo() {
 	}
 }
 
-async function likePost(){
+async function likePost() {
 	const postId = this.parentNode.parentNode.parentNode.dataset.id;
-	
-	try{
+
+	try {
 		const res = await fetch('posts/like', {
 			method: 'put',
-			headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                'postIdFromJSFile': postId,
-            })
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				'postIdFromJSFile': postId,
+			})
 		})
 		location.reload()
 		const data = await res.json()
 		console.log(data)
-		
+
 	}
-	catch(err){
+	catch (err) {
 		console.log(err)
 	}
 }
@@ -48,7 +56,7 @@ Array.from(deleteBtn).forEach(el => {
 	el.addEventListener('click', deleteTodo);
 });
 
-Array.from(like).forEach(el =>{
+Array.from(like).forEach(el => {
 	el.addEventListener('click', likePost)
 })
 
