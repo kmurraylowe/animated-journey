@@ -1,3 +1,6 @@
+body {
+    background: rgb(249, 249, 249)
+}
 .centerAll{
     display: flex;
     flex-direction: column;
@@ -35,4 +38,16 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+}
+
+#profile {
+    margin-bottom: 2%;
+}
+
+.form-group {
+    padding: 10px;
+}
+
+.modal-body {
+    
 }
