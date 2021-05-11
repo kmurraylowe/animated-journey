@@ -5,7 +5,7 @@ const fs = require('fs');
 module.exports = {
 	getPosts: async (req, res) => {
 		try {
-			const posts = await Post.find({}).populate('user', 'userName');
+			const posts = await Post.find({}).sort({createdAt: "desc"}).populate('user', 'userName');
 			res.render('posts.ejs', { posts: posts, user: req.user });
 		} catch (err) {
 			console.log(err);
@@ -26,6 +26,21 @@ module.exports = {
 		} catch (err) {
 			console.log(err);
 		}
+	},
+	getSinglePost: async (req, res) => {
+		const { postId } = req.params;
+		try {
+			const post = await Post.findById(postId).populate('user', 'userName');
+
+			if(post){
+				res.render('post.ejs', { post, user: req.user });
+			}else{
+				console.log(`ERROR: Post with id ${postId} was not found.`);
+				res.redirect('/posts');
+			}
+		}catch(error){
+			console.log(error);
+		};
 	},
 	createPost: async (req, res) => {
 		try {
@@ -104,7 +119,7 @@ module.exports = {
 			await cloudinary.uploader.destroy(post.cloudinaryId);
 			await post.remove()
 			console.log("Deleted Post");
-			res.json({ message: 'Successfully deleted post' });
+			res.redirect('/posts');
 		} catch (err) {
 			res.redirect("/posts");
 		}
